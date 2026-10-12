@@ -1,0 +1,76 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap");
+
+.logo-container {
+  width: 125px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  font-family: "Lato", sans-serif;
+}
+
+.logo-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.text-stroke {
+  font-size: 117px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-dasharray: 100%;
+  stroke-dashoffset: 100%;
+  animation: textStrokeAnim 4000ms linear both infinite;
+}
+
+@keyframes textStrokeAnim {
+  0% {
+    stroke-dasharray: 100%;
+    stroke-dashoffset: 100%;
+    fill: transparent;
+  }
+
+  95% {
+    stroke-dasharray: 0%;
+    stroke-dashoffset: 90%;
+    fill: transparent;
+  }
+
+  100% {
+    stroke-dasharray: 0%;
+    stroke-dashoffset: 0%;
+    fill: currentColor;
+    filter: drop-shadow(
+      2px 2px 5px rgba(0, 0, 0, 0.2)
+    );
+  }
+}
+
+@media (min-width: 640px) {
+  .logo-container {
+    width: 145px;
+    height: 36px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .logo-container {
+    width: 165px;
+    height: 40px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .text-stroke {
+    animation: none;
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+    fill: currentColor;
+  }
+}
+
