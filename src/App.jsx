@@ -12,32 +12,36 @@ import SearchResultsPage from "./Pages/SearchResultsPage/SearchResultsPage";
 import InfoPage from "./Pages/InfoPage/InfoPage";
 import ComparePage from "./Pages/ComparePage/ComparePage";
 import Wishlist from "./Pages/Wishlist/Wishlist";
+import CartPage from "./Pages/CartPage/CartPage";
 import SingUp from "./Pages/Home/Register/SingUp/SingUp";
 import Login from "./Pages/Home/Register/Login/Login";
 import { useEffect, useState } from "react";
 import { getProducts } from "./Sevices/App";
 import { Toaster } from "sonner";
+import { ShopProvider } from "./ShopContext";
+
 function App() {
   const [products, setProducts] = useState([]);
-  const [loading,setLoading]=useState(true)
+  const [loading, setLoading] = useState(true);
   const [searchResults, setSearchResults] = useState([]);
 
   const filterData = (text) => {
-    const filtered = products.results.filter((item) =>
+    const filtered = (products.results ?? []).filter((item) =>
       item.name.toLowerCase().includes(text.toLowerCase()),
     );
     setSearchResults(filtered);
   };
+
   useEffect(() => {
     getProducts().then((data) => {
       setProducts(data);
-      setLoading(false)
+      setLoading(false);
     });
-
   }, []);
+
   return (
-    <>
-    <Toaster position="top-center"  expand={false} richColors duration={2000}/>
+    <ShopProvider>
+      <Toaster position="top-center" expand={false} richColors duration={2000} />
       <Navbar filterData={filterData} />
       <Routes>
         <Route
@@ -57,15 +61,21 @@ function App() {
           element={<SearchResultsPage searchResults={searchResults} />}
         />
         <Route path="/info" element={<InfoPage />} />
-        <Route path="/ComparePage" element={<ComparePage products={products } />} />
-        <Route path="/Wishlist" element={<Wishlist products={products } loading={loading} />}  />
+        <Route path="/ComparePage" element={<ComparePage products={products} />} />
+        <Route
+          path="/Wishlist"
+          element={<Wishlist products={products} loading={loading} />}
+        />
+        <Route
+          path="/Cart"
+          element={<CartPage products={products} loading={loading} />}
+        />
         <Route path="/SingUp" element={<SingUp />} />
-
         <Route path="/Login" element={<Login />} />
       </Routes>
       <AuthModal />
       <Footer />
-    </>
+    </ShopProvider>
   );
 }
 

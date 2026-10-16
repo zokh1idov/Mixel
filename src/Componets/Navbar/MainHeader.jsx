@@ -12,10 +12,22 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { CiDark } from "react-icons/ci";
 import { MdOutlineLightMode } from "react-icons/md";
+import { useShop } from "../../ShopContext";
+
+function Badge({ count }) {
+  if (!count) return null;
+  return (
+    <span className="absolute -right-2 -top-2 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-[#ed3a2d] px-1 text-[10px] font-bold leading-none text-white">
+      {count}
+    </span>
+  );
+}
 
 export function MainHeader({ filterData }) {
   const [isDark, setIsDark] = useState(false);
   const navigate = useNavigate();
+  const { cart, favorites, compare } = useShop();
+
   useEffect(() => {
     document.documentElement.classList.toggle("dark", isDark);
   }, [isDark]);
@@ -45,9 +57,24 @@ export function MainHeader({ filterData }) {
               aria-label="Корзина"
               className="relative flex flex-col items-center gap-0.5 transition-colors hover:text-[#ed3a2d] cursor-pointer"
             >
-              <IoHeartOutline size={24} />
+              <span className="relative">
+                <IoHeartOutline size={24} />
+                <Badge count={favorites.length} />
+              </span>
               <span className="text-[10px]">Избранное</span>
             </button>
+          </Link>
+
+          <Link
+            to="/Cart"
+            aria-label="Корзина"
+            className="flex flex-col items-center gap-0.5 transition-colors hover:text-[#ed3a2d] cursor-pointer"
+          >
+            <span className="relative">
+              <IoCartOutline size={24} />
+              <Badge count={cart.length} />
+            </span>
+            <span className="text-[10px]">Корзина</span>
           </Link>
 
           <button
@@ -60,6 +87,7 @@ export function MainHeader({ filterData }) {
             <span className="text-[10px]">{isDark ? "Light" : "Dark"}</span>
           </button>
         </div>
+
         <div className="order-2 flex h-[42px] w-full overflow-hidden rounded-md border border-[#ed3a2d] bg-white dark:bg-gray-800 md:order-none md:w-auto md:max-w-[600px] md:flex-1 lg:mx-5">
           <div className="flex h-full shrink-0 cursor-pointer items-center gap-1 border-r border-gray-300 px-2 text-[11px] text-gray-700 dark:border-gray-600 dark:text-gray-200 sm:px-3 sm:text-xs md:gap-1 md:px-4 md:text-sm">
             <span className="whitespace-nowrap">Все категории</span>
@@ -111,7 +139,10 @@ export function MainHeader({ filterData }) {
             to="/ComparePage"
             className="flex flex-col items-center gap-1 transition-colors hover:text-[#ed3a2d]"
           >
-            <LuScale size={24} />
+            <span className="relative">
+              <LuScale size={24} />
+              <Badge count={compare.length} />
+            </span>
             <span>Сравнение</span>
           </Link>
 
@@ -119,17 +150,23 @@ export function MainHeader({ filterData }) {
             to="/Wishlist"
             className="flex flex-col items-center gap-1 transition-colors hover:text-[#ed3a2d]"
           >
-            <IoHeartOutline size={24} />
+            <span className="relative">
+              <IoHeartOutline size={24} />
+              <Badge count={favorites.length} />
+            </span>
             <span>Избранное</span>
           </Link>
 
-          <button
-            type="button"
+          <Link
+            to="/Cart"
             className="flex flex-col items-center gap-1 transition-colors hover:text-[#ed3a2d]"
           >
-            <IoCartOutline size={24} />
+            <span className="relative">
+              <IoCartOutline size={24} />
+              <Badge count={cart.length} />
+            </span>
             <span>Корзина</span>
-          </button>
+          </Link>
 
           <button
             type="button"
@@ -147,14 +184,31 @@ export function MainHeader({ filterData }) {
             aria-label="Сравнение"
             className="hover:text-[#ed3a2d]"
           >
-            <LuScale size={23} />
+            <span className="relative block">
+              <LuScale size={23} />
+              <Badge count={compare.length} />
+            </span>
           </Link>
           <Link
             to="/Wishlist"
             aria-label="Избранное"
             className="hover:text-[#ed3a2d]"
           >
-            <IoHeartOutline size={23} />
+            <span className="relative block">
+              <IoHeartOutline size={23} />
+              <Badge count={favorites.length} />
+            </span>
+          </Link>
+
+          <Link
+            to="/Cart"
+            aria-label="Корзина"
+            className="hover:text-[#ed3a2d]"
+          >
+            <span className="relative block">
+              <IoCartOutline size={23} />
+              <Badge count={cart.length} />
+            </span>
           </Link>
           <button
             type="button"

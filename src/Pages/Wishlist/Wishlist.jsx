@@ -1,9 +1,12 @@
 import { FaAngleRight } from "react-icons/fa";
 import ProductCard from "../../Componets/ProductCard/ProductCard";
 import CardSkeleton from "../../Componets/CardSelekton/CardSelekton";
+import { useShop } from "../../ShopContext";
 
 function Wishlist({ products, loading }) {
-  console.log("wishlist products:", products);
+  const { favorites } = useShop();
+  const list = (products.results ?? []).filter((p) => favorites.includes(p.id));
+
   return (
     <>
       <div className="Wishlist bg-white dark:bg-gray-900 p-3">
@@ -31,10 +34,10 @@ function Wishlist({ products, loading }) {
                 <CardSkeleton />
                 <CardSkeleton />
               </>
+            ) : list.length === 0 ? (
+              <p className="col-span-full text-gray-400">Ничего не найдено</p>
             ) : (
-              products.results.map((p) => (
-                <ProductCard key={p.id} product={p} />
-              ))
+              list.map((p) => <ProductCard key={p.id} product={p} />)
             )}
           </div>
         </div>

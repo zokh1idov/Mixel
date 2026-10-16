@@ -1,13 +1,11 @@
-import { useEffect, useState } from "react";
 import ProductCard from "../../Componets/ProductCard/ProductCard";
-import { getProducts } from "../../Sevices/App";
 
 function SearchResultsPage({searchResults}) {
 
   
 
   return (
-    <div className="dark:bg-gray-900">
+    <div className="dark:bg-gray-900 ">
       <div className="container_1200 pb-30">
         <div className="py-[26px] text-sm text-gray-400 dark:text-gray-300">
           Главная

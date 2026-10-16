@@ -1,57 +1,16 @@
 import { useEffect, useState } from "react";
 import { FaAngleRight } from "react-icons/fa";
 import { GoChevronUp, GoChevronRight } from "react-icons/go";
-import { LuScale } from "react-icons/lu";
 import {
   MdChevronLeft,
   MdFilterList,
   MdGridView,
   MdViewList,
-  MdShoppingCart,
-  MdFavorite,
 } from "react-icons/md";
 import { HiOutlineArrowLongRight } from "react-icons/hi2";
 import { GrMoney } from "react-icons/gr";
 import { PostProductsFilter } from "../../Sevices/Products";
 import ProductCard from "../../Componets/ProductCard/ProductCard";
-
-const cheaperProducts = [
-  {
-    image: "/imgs/Card9.png",
-    line1: "Умные часы Haylou",
-    line2: "RT-LS05S",
-    price: "458 000",
-    oldPrice: "529 000",
-  },
-  {
-    image: "/imgs/Card8.png",
-    line1: "Наушники Panasonic",
-    line2: "RP-HJE125E-R",
-    price: "18 000",
-    oldPrice: "99 000",
-  },
-  {
-    image: "/imgs/Card7.png",
-    line1: "Iphone 13 pro 256 Gb",
-    line2: "",
-    price: "9 525 000",
-    oldPrice: "10 520 000",
-  },
-  {
-    image: "/imgs/Card6.png",
-    line1: "Источник бесперебойного",
-    line2: "питания AVT 600 AVR (EA260)",
-    price: "600 000",
-    oldPrice: "909 000",
-  },
-  {
-    image: "/imgs/Card1.png",
-    line1: "Беспроводная мышь",
-    line2: "Logitech M220 SILENT",
-    price: "130 000",
-    oldPrice: "200 000",
-  },
-];
 
 const brands = [
   { name: "LG", count: 30 },
@@ -465,7 +424,7 @@ function ProductsPage() {
                             >
                               {page}
                             </button>
-                          ),
+                          )
                         )}
                       </div>
 
@@ -520,7 +479,7 @@ function ProductsPage() {
                   </div>
 
                   <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 xl:grid-cols-3">
-                    {filteredProducts.slice(0,6).map((p) => (
+                    {filteredProducts.slice(0, 6).map((p) => (
                       <ProductCard key={p.id} product={p} />
                     ))}
                   </div>
