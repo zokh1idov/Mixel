@@ -7,6 +7,7 @@ import { FiRefreshCw, FiChevronRight } from "react-icons/fi";
 import { Link, useParams } from "react-router-dom";
 import InstallmentModal from "../../Componets/InstallmentModal/InstallmentModal";
 import { getProductById } from "../../Sevices/App.js";
+import { useShop } from "../../ShopContext";
 
 const formatPrice = (value) => {
   const n = Number(value);
@@ -18,7 +19,8 @@ function ProductDteil() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [product, setProduct] = useState(null);
   const [activeImage, setActiveImage] = useState(null);
-  const [liked, setLiked] = useState(false);
+  const { cart, favorites, compare, toggleCart, toggleFavorite, toggleCompare } =
+    useShop();
 
   useEffect(() => {
     getProductById(id).then((data) => {
@@ -40,6 +42,10 @@ function ProductDteil() {
     );
   }
 
+  const inCart = cart.includes(product.id);
+  const liked = favorites.includes(product.id);
+  const inCompare = compare.includes(product.id);
+
   const thumbs = [
     ...(product.main_image ? [{ id: "main", image: product.main_image }] : []),
     ...(product.images ?? []).slice(0, 4),
@@ -47,6 +53,8 @@ function ProductDteil() {
 
   const iconBtn =
     "flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-500 transition-colors hover:border-[#ed3a2d] hover:text-[#ed3a2d] active:scale-95 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:border-[#ed3a2d] dark:hover:text-[#ed3a2d]";
+
+  const activeBtn = "!border-[#ed3a2d] !text-[#ed3a2d]";
 
   const card =
     "rounded-2xl border border-gray-100 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-gray-800/60";
@@ -108,18 +116,28 @@ function ProductDteil() {
               <IoInformationCircleOutline size={20} className="text-gray-400" />
 
               <div className="ml-auto flex items-center gap-2 lg:ml-4">
-                <button type="button" aria-label="В корзину" className={iconBtn}>
+                <button
+                  type="button"
+                  aria-label="В корзину"
+                  onClick={() => toggleCart(product.id)}
+                  className={`${iconBtn} ${inCart ? activeBtn : ""}`}
+                >
                   <MdShoppingCart size={20} />
                 </button>
                 <button
                   type="button"
                   aria-label="В избранное"
-                  onClick={() => setLiked((v) => !v)}
-                  className={`${iconBtn} ${liked ? "!border-[#ed3a2d] !text-[#ed3a2d]" : ""}`}
+                  onClick={() => toggleFavorite(product.id)}
+                  className={`${iconBtn} ${liked ? activeBtn : ""}`}
                 >
                   <MdFavorite size={20} />
                 </button>
-                <button type="button" aria-label="Сравнить" className={iconBtn}>
+                <button
+                  type="button"
+                  aria-label="Сравнить"
+                  onClick={() => toggleCompare(product.id)}
+                  className={`${iconBtn} ${inCompare ? activeBtn : ""}`}
+                >
                   <LuScale size={20} />
                 </button>
               </div>

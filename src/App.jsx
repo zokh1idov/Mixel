@@ -27,7 +27,7 @@ function App() {
 
   const filterData = (text) => {
     const filtered = (products.results ?? []).filter((item) =>
-      item.name.toLowerCase().includes(text.toLowerCase()),
+      item.name.toLowerCase().includes(text.toLowerCase())
     );
     setSearchResults(filtered);
   };
@@ -41,7 +41,12 @@ function App() {
 
   return (
     <ShopProvider>
-      <Toaster position="top-center" expand={false} richColors duration={2000} />
+      <Toaster
+        position="top-center"
+        expand={false}
+        richColors
+        duration={2000}
+      />
       <Navbar filterData={filterData} />
       <Routes>
         <Route
@@ -61,7 +66,10 @@ function App() {
           element={<SearchResultsPage searchResults={searchResults} />}
         />
         <Route path="/info" element={<InfoPage />} />
-        <Route path="/ComparePage" element={<ComparePage products={products} />} />
+        <Route
+          path="/ComparePage"
+          element={<ComparePage products={products} />}
+        />
         <Route
           path="/Wishlist"
           element={<Wishlist products={products} loading={loading} />}

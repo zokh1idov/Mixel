@@ -33,42 +33,39 @@ export function MainHeader({ filterData }) {
   }, [isDark]);
 
   return (
-    <header className="MainHerader bg-white py-3 transition-colors duration-300 dark:bg-gray-900 md:py-4">
+    <header className="sticky z-50 top-0  MainHerader bg-white py-3 transition-colors duration-300 dark:bg-gray-900 md:py-4">
       <div className="container_1200 mx-auto flex flex-wrap items-center justify-between gap-x-4 gap-y-3 px-4">
         <Link to="/" className="flex shrink-0 items-center">
           <Logo />
         </Link>
 
+        {/* Mobile */}
         <div className="flex items-center gap-4 text-gray-900 dark:text-gray-200 md:hidden">
-          <Link to={"/SingUp"}>
-            <button
-              type="button"
-              aria-label="Войти"
-              className="flex flex-col items-center gap-0.5 transition-colors hover:text-[#ed3a2d] cursor-pointer"
-            >
-              <IoPersonOutline size={23} />
-              <span className="text-[10px]">Войти</span>
-            </button>
+          <Link
+            to="/SingUp"
+            aria-label="Войти"
+            className="flex cursor-pointer flex-col items-center gap-0.5 transition-colors hover:text-[#ed3a2d]"
+          >
+            <IoPersonOutline size={23} />
+            <span className="text-[10px]">Войти</span>
           </Link>
 
-          <Link to={"/Wishlist"}>
-            <button
-              type="button"
-              aria-label="Корзина"
-              className="relative flex flex-col items-center gap-0.5 transition-colors hover:text-[#ed3a2d] cursor-pointer"
-            >
-              <span className="relative">
-                <IoHeartOutline size={24} />
-                <Badge count={favorites.length} />
-              </span>
-              <span className="text-[10px]">Избранное</span>
-            </button>
+          <Link
+            to="/Wishlist"
+            aria-label="Избранное"
+            className="flex cursor-pointer flex-col items-center gap-0.5 transition-colors hover:text-[#ed3a2d]"
+          >
+            <span className="relative">
+              <IoHeartOutline size={24} />
+              <Badge count={favorites.length} />
+            </span>
+            <span className="text-[10px]">Избранное</span>
           </Link>
 
           <Link
             to="/Cart"
             aria-label="Корзина"
-            className="flex flex-col items-center gap-0.5 transition-colors hover:text-[#ed3a2d] cursor-pointer"
+            className="flex cursor-pointer flex-col items-center gap-0.5 transition-colors hover:text-[#ed3a2d]"
           >
             <span className="relative">
               <IoCartOutline size={24} />
@@ -81,13 +78,14 @@ export function MainHeader({ filterData }) {
             type="button"
             onClick={() => setIsDark(!isDark)}
             aria-label="Переключить тему"
-            className="flex flex-col items-center gap-0.5 transition-colors hover:text-[#ed3a2d] cursor-pointer"
+            className="flex cursor-pointer flex-col items-center gap-0.5 transition-colors hover:text-[#ed3a2d]"
           >
             {isDark ? <MdOutlineLightMode size={23} /> : <CiDark size={23} />}
             <span className="text-[10px]">{isDark ? "Light" : "Dark"}</span>
           </button>
         </div>
 
+        {/* Search */}
         <div className="order-2 flex h-[42px] w-full overflow-hidden rounded-md border border-[#ed3a2d] bg-white dark:bg-gray-800 md:order-none md:w-auto md:max-w-[600px] md:flex-1 lg:mx-5">
           <div className="flex h-full shrink-0 cursor-pointer items-center gap-1 border-r border-gray-300 px-2 text-[11px] text-gray-700 dark:border-gray-600 dark:text-gray-200 sm:px-3 sm:text-xs md:gap-1 md:px-4 md:text-sm">
             <span className="whitespace-nowrap">Все категории</span>
@@ -97,11 +95,13 @@ export function MainHeader({ filterData }) {
             />
           </div>
 
-          <form className="flex h-full min-w-0 flex-1 items-center">
+          <form
+            onSubmit={(e) => e.preventDefault()}
+            className="flex h-full min-w-0 flex-1 items-center"
+          >
             <input
               onChange={(e) => {
-                const value = e.target.value;
-                filterData(value);
+                filterData(e.target.value);
                 navigate("/search");
               }}
               type="text"
@@ -125,10 +125,10 @@ export function MainHeader({ filterData }) {
           </form>
         </div>
 
+        {/* Desktop */}
         <div className="hidden items-center gap-5 text-sm text-gray-900 dark:text-gray-200 lg:flex xl:gap-8">
           <Link
-            to={"/SingUp"}
-            type="button"
+            to="/SingUp"
             className="flex cursor-pointer flex-col items-center gap-1 transition-colors hover:text-[#ed3a2d]"
           >
             <IoPersonOutline size={24} />
@@ -178,6 +178,7 @@ export function MainHeader({ filterData }) {
           </button>
         </div>
 
+        {/* Tablet */}
         <div className="hidden items-center gap-4 text-gray-900 dark:text-gray-200 md:flex lg:hidden">
           <Link
             to="/ComparePage"
@@ -189,6 +190,7 @@ export function MainHeader({ filterData }) {
               <Badge count={compare.length} />
             </span>
           </Link>
+
           <Link
             to="/Wishlist"
             aria-label="Избранное"
@@ -210,6 +212,7 @@ export function MainHeader({ filterData }) {
               <Badge count={cart.length} />
             </span>
           </Link>
+
           <button
             type="button"
             onClick={() => setIsDark(!isDark)}
